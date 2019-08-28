@@ -28,7 +28,7 @@
 
   <groupId>org.everit.http</groupId>
   <artifactId>org.everit.http.client</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
   <packaging>bundle</packaging>
   <name>Everit - HTTP client</name>
   <description>Asynchronous HTTP Client API that can be a wrapper around any of the well known HTTP client libraries in Java.</description>
@@ -84,7 +84,7 @@
             </Import-Package>
             <Export-Package>
               org.everit.http.client;version="1.0.0",
-              org.everit.http.client.async;version="1.0.0"
+              org.everit.http.client.async;version="1.1.0"
             </Export-Package>
           </instructions>
         </configuration>
@@ -97,6 +97,13 @@
       <groupId>io.reactivex.rxjava2</groupId>
       <artifactId>rxjava</artifactId>
       <version>2.2.10</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.spotbugs</groupId>
+      <artifactId>spotbugs-annotations</artifactId>
+      <version>3.1.12</version>
+      <scope>provided</scope>
     </dependency>
 
     <!-- Test dependencies -->

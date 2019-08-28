@@ -88,10 +88,42 @@ MultipartAsyncContentProvider as the body of the HttpRequest:
 You may use the constructor of the _Part_ class to create more advanced parts like content read
 from a file.
 
+### Auto close httpResponse when body end reached
+
+The received HttpResponse object must be closed when the processing of it is done. Until the
+response has no body, this can be an easy job, but as soon as the body is processed asynchronously
+the task is not that trivial anymore. This is where AutoCloseAsyncContentProvider can help. The
+programmer can wrap the 
+
 **Closing the Part content**
 
 You may have realized that the Part also needs an AsyncContentProvider that should be closed
-somewhen. This is done automatically once the request is sent, failed or canceled.
+somewhen. This is done automatically once the request is sent, failed or canceled. Here is a
+sample of reading the response body and making sure that both, the body and the request is closed
+in the end:
+
+    // Let's say we have a httpRequest built already
+    
+    httpClient.send(httpRequest).subscribe((httpResponse) -> {
+    
+      // We wrap the original body with an autoClose one and also pass the
+      // httpResponse so the autoClose instance will close the response as
+      // well in the end
+    
+      AsyncContentProvider autoCloseBody = new AutoCloseAsyncContentProvider(
+          httpResponse.getBody(), httpResponse);
+    
+      // After the wrap, we read the data just like we do it normally. In this
+      // Example we use the util function to read everything in memory.
+    
+      Single<String> bodySingle =
+          AsyncContentUtil.readString(autoCloseBody, StandardCharsets.UTF8);
+    
+      // Both the body and request will be closed as soon that bodySingle
+      // succees or fails
+    
+      bodySingle.subscribe(...);
+    });
 
 
 ### AsyncContentProvider implementations
