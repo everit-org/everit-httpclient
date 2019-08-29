@@ -1,5 +1,5 @@
-everit-async-httpclient
-=======================
+everit-httpclient
+=================
 
 This is a library that can be used as a wrapper around well known java based HTTP clients.
 
