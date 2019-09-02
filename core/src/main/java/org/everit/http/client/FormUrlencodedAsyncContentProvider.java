@@ -34,16 +34,25 @@ public class FormUrlencodedAsyncContentProvider extends ByteArrayAsyncContentPro
 
   private static byte[] convertParametersToByteArray(Map<String, Collection<String>> parameters) {
     ByteArrayOutputStream bout = new ByteArrayOutputStream();
+    boolean first = true;
     for (Entry<String, Collection<String>> parameter : parameters.entrySet()) {
       Collection<String> values = parameter.getValue();
 
       try {
         String key = parameter.getKey();
         if (values == null || values.isEmpty()) {
+          if (!first) {
+            bout.write("&".getBytes(StandardCharsets.UTF_8));
+          }
+          first = false;
           bout.write(
               (URLEncoder.encode(key, "UTF-8") + '=').getBytes(StandardCharsets.UTF_8));
         } else {
           for (String value : values) {
+            if (!first) {
+              bout.write("&".getBytes(StandardCharsets.UTF_8));
+            }
+            first = false;
             bout.write(
                 (URLEncoder.encode(key, "UTF-8") + '=' + URLEncoder.encode(value, "UTF-8"))
                     .getBytes(StandardCharsets.UTF_8));
