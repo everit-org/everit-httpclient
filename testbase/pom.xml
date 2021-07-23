@@ -28,7 +28,7 @@
 
   <groupId>org.everit.http</groupId>
   <artifactId>org.everit.http.client.testbase</artifactId>
-  <version>1.1.0</version>
+  <version>1.1.2</version>
   <packaging>bundle</packaging>
   <name>Everit - HTTP client</name>
   <description>Asynchronous HTTP Client API that can be a wrapper around any of the well known HTTP client libraries in Java.</description>
@@ -95,7 +95,7 @@
     <dependency>
       <groupId>org.everit.http</groupId>
       <artifactId>org.everit.http.client</artifactId>
-      <version>1.1.0</version>
+      <version>1.1.2</version>
     </dependency>
     <dependency>
       <groupId>org.everit.web</groupId>

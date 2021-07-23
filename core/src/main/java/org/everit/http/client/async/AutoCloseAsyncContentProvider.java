@@ -36,8 +36,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  *
  * <p>
  * Please note that if there an exception during closing the provider in onSuccess, an
- * {@link ClosingProviderAutomaticallyException} is received by the onError listener that the programmer might
- * only want to log as the success and its listener ran successfully.
+ * {@link ClosingProviderAutomaticallyException} is received by the onError listener that the
+ * programmer might only want to log as the success and its listener ran successfully.
  * </p>
  *
  * <p>
@@ -93,8 +93,6 @@ public class AutoCloseAsyncContentProvider implements AsyncContentProvider {
     if (error != null) {
       throwAsUnchecked(error);
     }
-
-    this.wrapped.close();
   }
 
   @Override
@@ -127,7 +125,6 @@ public class AutoCloseAsyncContentProvider implements AsyncContentProvider {
   @Override
   public AsyncContentProvider onError(Consumer<Throwable> action) {
     this.wrapped.onError((error) -> {
-      boolean alreadyClosed = error instanceof ClosingProviderAutomaticallyException;
 
       Throwable newError = null;
       try {
@@ -136,6 +133,7 @@ public class AutoCloseAsyncContentProvider implements AsyncContentProvider {
         newError = e;
       } finally {
         try {
+          boolean alreadyClosed = error instanceof ClosingProviderAutomaticallyException;
           if (!alreadyClosed) {
             close();
           }
